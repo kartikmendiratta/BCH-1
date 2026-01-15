@@ -19,7 +19,7 @@ export default function Dashboard() {
   useEffect(() => {
     fetchPrices()
     loadData()
-  }, [])
+  }, [fetchPrices])
 
   const loadData = async () => {
     try {

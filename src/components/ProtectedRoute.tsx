@@ -12,7 +12,7 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
 
   useEffect(() => {
     if (!isLoading && !user) {
-      window.location.href = '/api/auth/login?returnTo=' + encodeURIComponent(window.location.pathname)
+      window.location.href = '/auth/login?returnTo=' + encodeURIComponent(window.location.pathname)
     }
   }, [user, isLoading])
 

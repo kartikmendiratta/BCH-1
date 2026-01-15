@@ -55,7 +55,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
               {user?.email}
             </span>
             <a 
-              href="/api/auth/logout"
+              href="/auth/logout"
               className="text-neutral-400 hover:text-white transition-colors"
             >
               <LogOut size={20} />

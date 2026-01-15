@@ -21,10 +21,10 @@ export default function HomePage() {
               </Link>
             ) : (
               <>
-                <a href="/api/auth/login">
+                <a href="/auth/login">
                   <Button variant="ghost">Login</Button>
                 </a>
-                <a href="/api/auth/login">
+                <a href="/auth/login">
                   <Button>Get Started</Button>
                 </a>
               </>
@@ -58,7 +58,7 @@ export default function HomePage() {
             </>
           ) : (
             <>
-              <a href="/api/auth/login">
+              <a href="/auth/login">
                 <Button size="lg">
                   Start Trading
                   <ArrowRight size={18} className="ml-2 inline" />

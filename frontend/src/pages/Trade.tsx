@@ -140,8 +140,8 @@ export default function Trade() {
     )
   }
 
-  const isBuyer = trade.buyer_id === user?.sub
-  const isSeller = trade.seller_id === user?.sub
+  const isBuyer = trade.buyer_id === Number(user?.sub)
+  const isSeller = trade.seller_id === Number(user?.sub)
   const fiatSymbol = { USD: '$', INR: '₹', EUR: '€' }[trade.fiat_currency] || '$'
 
   return (
@@ -269,11 +269,11 @@ export default function Trade() {
                 messages.map((msg, i) => (
                   <div
                     key={msg.id || i}
-                    className={`flex ${msg.sender_id === user?.sub ? 'justify-end' : 'justify-start'}`}
+                    className={`flex ${msg.sender_id === Number(user?.sub) ? 'justify-end' : 'justify-start'}`}
                   >
                     <div
                       className={`max-w-[80%] rounded-lg px-3 py-2 ${
-                        msg.sender_id === user?.sub
+                        msg.sender_id === Number(user?.sub)
                           ? 'bg-white text-black'
                           : 'bg-neutral-800 text-white'
                       }`}

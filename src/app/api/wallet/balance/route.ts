@@ -26,8 +26,8 @@ export const GET = withAuth(async (req: AuthenticatedRequest) => {
     const balance_bch = await getBalance(wallet.address)
     
     // Get current price to calculate USD value
-    const { data: priceData } = await fetch('/api/price')
-    const prices = await priceData.json()
+    const priceResponse = await fetch('/api/price')
+    const prices = await priceResponse.json()
     const balance_usd = balance_bch * (prices?.usd || 200)
 
     return NextResponse.json({

@@ -1,4 +1,4 @@
-import { auth0 } from '@auth0/nextjs-auth0'
+import { auth0 } from '@/lib/auth/auth0'
 import { NextRequest, NextResponse } from 'next/server'
 import { supabase } from '@/lib/config/db'
 

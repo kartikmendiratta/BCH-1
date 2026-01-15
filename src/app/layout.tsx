@@ -1,5 +1,5 @@
 import './globals.css'
-import { Auth0Provider } from '@auth0/nextjs-auth0'
+import { Auth0Provider } from '@auth0/nextjs-auth0/client';
 import { Metadata, Viewport } from 'next'
 
 export const metadata: Metadata = {

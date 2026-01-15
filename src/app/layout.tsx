@@ -1,11 +1,15 @@
 import './globals.css'
-import { UserProvider } from '@auth0/nextjs-auth0/client'
-import { Metadata } from 'next'
+import { Auth0Provider } from '@auth0/nextjs-auth0'
+import { Metadata, Viewport } from 'next'
 
 export const metadata: Metadata = {
   title: 'BCH P2P - Bitcoin Cash Peer to Peer Trading',
   description: 'Trade Bitcoin Cash peer to peer with secure escrow and instant transactions',
-  viewport: 'width=device-width, initial-scale=1',
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
 }
 
 export default function RootLayout({
@@ -14,11 +18,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body>
-        <UserProvider>
+    <html lang="en" className="h-full">
+      <body className="h-full bg-black text-white antialiased">
+        <Auth0Provider>
           {children}
-        </UserProvider>
+        </Auth0Provider>
       </body>
     </html>
   )

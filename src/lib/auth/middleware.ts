@@ -1,4 +1,4 @@
-import { getSession } from '@auth0/nextjs-auth0'
+import { auth0 } from '@auth0/nextjs-auth0'
 import { NextRequest, NextResponse } from 'next/server'
 import { supabase } from '@/lib/config/db'
 
@@ -13,7 +13,7 @@ export async function withAuth(
 ) {
   return async (req: NextRequest, context: any) => {
     try {
-      const session = await getSession(req, NextResponse.next())
+      const session = await auth0.getSession()
       
       if (!session?.user) {
         return NextResponse.json(

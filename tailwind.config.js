@@ -8,13 +8,13 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#ffffff',
-        secondary: '#a3a3a3',
-        muted: '#525252',
-        background: '#000000',
-        surface: '#0a0a0a',
-        card: '#111111',
-        border: '#1f1f1f',
+        primary: 'var(--color-primary)',
+        secondary: 'var(--color-secondary)',
+        muted: 'var(--color-muted)',
+        background: 'var(--color-background)',
+        surface: 'var(--color-surface)',
+        card: 'var(--color-card)',
+        border: 'var(--color-border)',
       }
     },
   },

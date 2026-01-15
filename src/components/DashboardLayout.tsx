@@ -57,6 +57,8 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             <a 
               href="/auth/logout"
               className="text-neutral-400 hover:text-white transition-colors"
+              title="Logout"
+              aria-label="Logout"
             >
               <LogOut size={20} />
             </a>

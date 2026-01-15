@@ -1,10 +1,10 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { withAuth } from '@/lib/auth/middleware'
+import { NextResponse } from 'next/server'
+import { withAuth, AuthenticatedRequest } from '@/lib/auth/middleware'
 import { supabase } from '@/lib/config/db'
 
-export const GET = withAuth(async (req: NextRequest) => {
+export const GET = withAuth(async (req: AuthenticatedRequest) => {
   try {
-    const userId = (req as any).userId
+    const userId = req.userId
 
     const { data: user, error } = await supabase
       .from('users')

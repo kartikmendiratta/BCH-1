@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { withAuth } from '@/lib/auth/middleware'
+import { withAuth, AuthenticatedRequest } from '@/lib/auth/middleware'
 import { supabase } from '@/lib/config/db'
 
 // GET /api/offers - Get all active offers
@@ -46,9 +46,9 @@ export async function GET(req: NextRequest) {
 }
 
 // POST /api/offers - Create a new offer
-export const POST = withAuth(async (req: NextRequest) => {
+export const POST = withAuth(async (req: AuthenticatedRequest) => {
   try {
-    const userId = (req as any).userId
+    const userId = req.userId
     const {
       type,
       amount_bch,

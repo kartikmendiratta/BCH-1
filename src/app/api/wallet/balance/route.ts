@@ -1,12 +1,12 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { withAuth } from '@/lib/auth/middleware'
+import { NextResponse } from 'next/server'
+import { withAuth, AuthenticatedRequest } from '@/lib/auth/middleware'
 import { supabase } from '@/lib/config/db'
 import { getBalance } from '@/lib/services/bch.service'
 
 // GET /api/wallet/balance - Get user's wallet balance
-export const GET = withAuth(async (req: NextRequest) => {
+export const GET = withAuth(async (req: AuthenticatedRequest) => {
   try {
-    const userId = (req as any).userId
+    const userId = req.userId
 
     // Get wallet info
     const { data: wallet, error: walletError } = await supabase

@@ -1,18 +1,25 @@
-import { auth0 } from '@/lib/auth/auth0'
+// src/lib/auth/middleware.ts
 import { NextRequest, NextResponse } from 'next/server'
+import { auth0 } from '@/lib/auth/auth0'
 import { supabase } from '@/lib/config/db'
 
-export interface AuthenticatedRequest extends NextRequest {
-  userId?: number
-  userSub?: string
-  userEmail?: string
+// Next.js Route Context Type
+export type RouteContext = {
+  params: Promise<Record<string, string | string[] | undefined>>
 }
 
-export async function withAuth(
-  handler: (req: NextRequest, context: any) => Promise<NextResponse>
+// Extended request with user data
+export interface AuthenticatedRequest extends NextRequest {
+  userId: string
+  userSub: string
+}
+
+export function withAuth(
+  handler: (req: AuthenticatedRequest, context: RouteContext) => Promise<NextResponse>
 ) {
-  return async (req: NextRequest, context: any) => {
+  return async (req: NextRequest, context: RouteContext) => {
     try {
+      // Auth0 v4 syntax
       const session = await auth0.getSession()
       
       if (!session?.user) {
@@ -25,7 +32,7 @@ export async function withAuth(
       const userSub = session.user.sub
       const userEmail = session.user.email
 
-      // Get or create user in database
+      // Get or create user in Supabase
       let { data: user, error } = await supabase
         .from('users')
         .select('id')
@@ -33,7 +40,6 @@ export async function withAuth(
         .single()
 
       if (error || !user) {
-        // Create user if doesn't exist
         const { data: newUser, error: createError } = await supabase
           .from('users')
           .insert({
@@ -45,22 +51,21 @@ export async function withAuth(
 
         if (createError || !newUser) {
           return NextResponse.json(
-            { error: 'Failed to create user' },
+            { error: 'Failed to sync user' },
             { status: 500 }
           )
         }
-        
         user = newUser
       }
 
-      // Add user info to request
-      ;(req as any).userId = user.id
-      ;(req as any).userSub = userSub
-      ;(req as any).userEmail = userEmail
+      // Create authenticated request with user data
+      const authenticatedReq = req as AuthenticatedRequest
+      authenticatedReq.userId = user.id.toString()
+      authenticatedReq.userSub = userSub
 
-      return handler(req, context)
+      return handler(authenticatedReq, context)
     } catch (error) {
-      console.error('Auth error:', error)
+      console.error('Auth wrapper error:', error)
       return NextResponse.json(
         { error: 'Authentication failed' },
         { status: 401 }

@@ -1,11 +1,11 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { withAuth } from '@/lib/auth/middleware'
+import { NextResponse } from 'next/server'
+import { withAuth, AuthenticatedRequest } from '@/lib/auth/middleware'
 import { supabase } from '@/lib/config/db'
 
 // GET /api/trades - Get user's trades
-export const GET = withAuth(async (req: NextRequest) => {
+export const GET = withAuth(async (req: AuthenticatedRequest) => {
   try {
-    const userId = (req as any).userId
+    const userId = req.userId
 
     const { data: trades, error } = await supabase
       .from('trades')
@@ -36,9 +36,9 @@ export const GET = withAuth(async (req: NextRequest) => {
 })
 
 // POST /api/trades - Create a new trade
-export const POST = withAuth(async (req: NextRequest) => {
+export const POST = withAuth(async (req: AuthenticatedRequest) => {
   try {
-    const userId = (req as any).userId
+    const userId = req.userId
     const { offer_id, amount_bch } = await req.json()
 
     if (!offer_id || !amount_bch) {
